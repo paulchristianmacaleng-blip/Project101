@@ -20,16 +20,18 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
+
 # Install PHP and JS dependencies and build assets
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-RUN npm install && npm run build && \
-    php artisan config:clear && \
-    php artisan cache:clear && \
-    php artisan view:clear && \
-    php artisan route:clear
+RUN npm install && npm run build
 
 # Expose port
 EXPOSE 10000
 
-# Start Laravel server
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=10000
+# Start Laravel server and clear caches
+CMD php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan view:clear && \
+    php artisan route:clear && \
+    php artisan migrate --force && \
+    php artisan serve --host=0.0.0.0 --port=10000
