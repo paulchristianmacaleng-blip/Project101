@@ -96,6 +96,6 @@
     </div>
     <div class="modal-overlay"></div>
 
-    @vite('resources/js/main_script.js', true)
+    @vite('resources/js/main_script.js')
 </body>
 </html>
