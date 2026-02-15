@@ -22,7 +22,11 @@ COPY . .
 
 # Install PHP and JS dependencies and build assets
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-RUN npm install && npm run build
+RUN npm install && npm run build && \
+    php artisan config:clear && \
+    php artisan cache:clear && \
+    php artisan view:clear && \
+    php artisan route:clear
 
 # Expose port
 EXPOSE 10000
