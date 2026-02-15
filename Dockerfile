@@ -23,7 +23,8 @@ COPY . .
 
 # Install PHP and JS dependencies and build assets
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-RUN npm install && npm run build
+RUN npm install && npm run build && \
+    test -f public/build/manifest.json || (echo 'Vite manifest missing!' && exit 1)
 
 # Expose port
 EXPOSE 10000
